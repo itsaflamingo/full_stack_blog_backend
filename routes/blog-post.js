@@ -1,15 +1,20 @@
 const express = require('express');
 const router = express.Router();
 
-router.get(
-  '/post',
-  (req, res, next) => {
+router.post('/create', (req, res, next) => {
+    
+})
+
+router.post('/update', (req, res, next) => {
     res.json({
-      message: 'You made it to the secure route',
-      user: req.user,
-      token: req.query.secret_token
+        message: 'You updated a blog post!'
     })
-  }
-);
+})
+
+router.post('/delete', (req, res, next) => {
+    res.json({
+        message: 'You deleted a blog post!'
+    })
+})
 
 module.exports = router;

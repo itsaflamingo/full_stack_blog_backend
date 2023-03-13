@@ -4,7 +4,6 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const dotenv = require('dotenv');
 const bodyParser = require('body-parser');
-const path = require('path');
 dotenv.config();
 
 // Prepare for mongoose 7
@@ -28,20 +27,20 @@ require('./auth/auth');
 // import routes
 const indexRouter = require('./routes/index');
 const loginRouter = require('./routes/login');
-const blogPost = require('./routes/blog-post');
+const blogPostRouter = require('./routes/blog-post');
+const blogRouter = require('./routes/blog');
 
 // init express
 const app = express();
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
-
-app.use('/', indexRouter);
-
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use('/blog-post', passport.authenticate('jwt', { session: false }), blogPost);
 
+// use routes
+app.use('/', indexRouter);
+app.use('/login', loginRouter);
+app.use('/blog', blogRouter);
+
+app.use('/blog-secure', passport.authenticate('jwt', { session: false }), blogPostRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
