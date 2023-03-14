@@ -43,12 +43,41 @@ exports.create_post = [
             })
 }]
 
+exports.update_get = (req, res, next) => {
+    async.waterfall([
+        function (callback) {
+          const query = BlogPost.findById(req.params.id);
+          query.then((blog_post) => {
+            callback(null, blog_post);
+          }).catch((err) => {
+            callback(err);
+          });
+        },
+        function (blog_post, callback) {
+          if (blog_post === null) {
+            const err = new Error('Blog post not found');
+            err.status = 404;
+            return callback(err);
+          }
+          callback(null, blog_post);
+        },
+      ],
+      function (err, results) {
+        if (err) return next(err);
+        res.json({
+          title: results.title,
+          body: results.body,
+          published: results.published,
+        });
+      }
+    );
+  };
+  
 exports.update_post = (req, res, next) => {
     res.json({
-        message: 'You updated a blog post!'
+        message: 'update post'
     })
 }
-
 exports.delete_post = (req, res, next) => {
     res.json({
         message: 'You deleted a blog post!'
