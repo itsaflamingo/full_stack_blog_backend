@@ -27,7 +27,7 @@ require('./auth/auth');
 // import routes
 const indexRouter = require('./routes/index');
 const loginRouter = require('./routes/login');
-const blogPostRouter = require('./routes/blog-post');
+const blogPostRouter = require('./routes/blog_secure');
 const blogRouter = require('./routes/blog');
 
 // init express
