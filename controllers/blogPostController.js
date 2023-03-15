@@ -67,8 +67,8 @@ exports.update_get = (req, res, next) => {
       function (err, results) {
         if (err) return next(err);
         res.json({
-          title: results.title,
-          body: results.body,
+          title:     results.title,
+          body:      results.body,
           published: results.published,
         });
       }
@@ -105,6 +105,10 @@ exports.update_post = [
         // Otherwise save updated post and update record
         BlogPost.findByIdAndUpdate(req.params.id, blogPost)
             .then(blogpost => {
+                // blog post not found
+                if(!blogpost) {
+                    return res.status(404).json({ message: 'Blog post not found' });
+                }
                 // Successful: send updated book as json object
                 res.json({
                     title: blogpost.title,
@@ -117,7 +121,12 @@ exports.update_post = [
     }]
 
 exports.delete_post = (req, res, next) => {
-    res.json({
-        message: 'You deleted a blog post!'
-    })
+    BlogPost.findByIdAndDelete(req.params.id)
+        .then(blogpost => {
+            if(!blogpost) {
+                return res.status(404).json({ message: 'Blog post not found' });
+            }
+            res.json({ message: 'Blog post deleted successfully' });
+        })
+        .catch(err => next(err))
 }
