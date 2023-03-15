@@ -5,7 +5,7 @@ const async = require("async");
 
 // POST request for blog backend
 exports.create_post = [
-    // sanitize and trim
+    // Sanitize and trim
     body('title', 'Title must not be empty.')
     .trim()
     .isLength({ min: 1 })

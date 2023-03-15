@@ -8,5 +8,8 @@ router.get('/', (req, res) => {
     })
 })
 
+const comment_controller = require('../controllers/commentController');
+
+router.post('/post/:id/create-comment', comment_controller.create_comment);
 
 module.exports = router;

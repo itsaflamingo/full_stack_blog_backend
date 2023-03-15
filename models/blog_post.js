@@ -9,7 +9,7 @@ const BlogPostSchema = new Schema({
     date:       { type: Date, default: Date.now, required: true },
 })
 
-// 
+// Add virtual. Use function() to access 'this'.
 BlogPostSchema.virtual('url').get(function() {
     return `/blog/post/${this._id}`;
 })
