@@ -44,12 +44,14 @@ exports.create_post = [
 }]
 
 exports.update_get = (req, res, next) => {
+    // Async functions that execute sequentially 
     async.waterfall([
+        // Get selected blog post by id in parameter
         function (callback) {
-          const query = BlogPost.findById(req.params.id);
-          query.then((blog_post) => {
+          BlogPost.findById(req.params.id)
+            .then(blog_post => {
             callback(null, blog_post);
-          }).catch((err) => {
+          }).catch(err => {
             callback(err);
           });
         },
@@ -60,7 +62,7 @@ exports.update_get = (req, res, next) => {
             return callback(err);
           }
           callback(null, blog_post);
-        },
+        }
       ],
       function (err, results) {
         if (err) return next(err);
@@ -72,12 +74,48 @@ exports.update_get = (req, res, next) => {
       }
     );
   };
-  
-exports.update_post = (req, res, next) => {
-    res.json({
-        message: 'update post'
-    })
-}
+
+exports.update_post = [
+    // Validate and sanitize fields
+    body('title', 'Title must not be empty.')
+        .trim()
+        .isLength({ min: 1 })
+        .escape(),
+    body('body', 'Body must not be empty')
+        .trim()
+        .isLength({ min: 1 })
+        .escape(),
+    // Process request
+    (req, res, next) => {
+        // Extract validation errors from request
+        const errors = validationResult(req);
+        // Create post object with new data but old id
+        const blogPost = new BlogPost({
+            title:     req.body.title,
+            body:      req.body.body,
+            published: true,
+            _id:       req.params.id
+        })
+        // If errors array is not empty, handle error
+        if(!errors.isEmpty()) {
+            const err = new Error('Blog post not found');
+            err.status = 404;
+            return next(err);
+        }
+        // Otherwise save updated post and update record
+        BlogPost.findByIdAndUpdate(req.params.id, blogPost)
+            .then(blogpost => {
+                // Successful: send updated book as json object
+                res.json({
+                    title: blogpost.title,
+                    body:  blogpost.body,
+                    date:  blogpost.date,
+                    _id:   blogpost._id
+                })
+            })
+            .catch(err => next(err))
+    }]
+
 exports.delete_post = (req, res, next) => {
     res.json({
         message: 'You deleted a blog post!'
