@@ -2,6 +2,14 @@ const Comment = require('../models/comment');
 const BlogPost = require('../models/blog_post');
 const { body, validationResult } = require('express-validator');
 
+exports.comment_list = (req, res, next) => {
+    Comment.find({ blogPost: req.params.id }, 'name body date')
+        .sort({ date: 1 })
+        .exec()
+            .then(result => res.json(result))
+            .catch(err => next(err))
+}
+
 exports.create_comment = [
     // Sanitize
     body('name', 'Name must not be empty.')

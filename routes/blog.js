@@ -11,6 +11,8 @@ router.get('/', (req, res) => {
     })
 })
 
+router.get('/post/:id',                 comment_controller.comment_list);
 router.post('/post/:id/create-comment', comment_controller.create_comment);
+
 
 module.exports = router;
