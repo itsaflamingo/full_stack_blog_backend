@@ -52,3 +52,14 @@ exports.create_comment = [
             })
 }]
 
+exports.delete_comment = (req, res, next) => {
+    Comment.findByIdAndDelete(req.params.cid)
+        .then(comment => {
+            if(!comment) {
+                return res.status(404).json({ message: 'Comment not found' })
+            }
+            res.json({ message: 'Comment deleted successfully' });
+        })
+        .catch(err => next(err));
+}
+
