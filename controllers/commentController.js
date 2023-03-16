@@ -51,7 +51,8 @@ exports.create_comment = [
                     .then(results => {
                         res.json({
                             name: results.name,
-                            body: results.body
+                            body: results.body,
+                            date: results.date_formatted
                         })
                     })
             })

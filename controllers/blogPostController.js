@@ -35,7 +35,8 @@ exports.create_post = [
                 res.json({
                     title:     results.title,
                     body:      results.body,
-                    published: results.published
+                    published: results.published,
+                    date:      results.date_formatted
                 })
             })
             .catch(err => {
@@ -70,6 +71,7 @@ exports.update_get = (req, res, next) => {
           title:     results.title,
           body:      results.body,
           published: results.published,
+          date:      results.date_formatted
         });
       }
     );
@@ -113,7 +115,7 @@ exports.update_post = [
                 res.json({
                     title: blogpost.title,
                     body:  blogpost.body,
-                    date:  blogpost.date,
+                    date:  blogpost.date_formatted,
                     _id:   blogpost._id
                 })
             })

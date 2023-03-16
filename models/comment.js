@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { DateTime } = require("luxon");
 
 const Schema = mongoose.Schema;
 
@@ -7,6 +8,13 @@ const CommentSchema = new Schema({
     body:     { type: String, required: true },
     date:     { type: Date, default: Date.now, required: true },
     blogPost: { type: Schema.Types.ObjectId, ref: 'BlogPost', required: true }
+}, {
+    toObject: { virtuals: true },
+    toJSON:   { virtuals: true }
+})
+
+CommentSchema.virtual('date_formatted').get(function() {
+    return DateTime.fromJSDate(this.date).toLocaleString(DateTime.DATE_MED);
 })
 
 // Add virtual. Use function() to access 'this'.
