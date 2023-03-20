@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const dotenv = require('dotenv');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 dotenv.config();
 
 // Prepare for mongoose 7
@@ -24,14 +25,16 @@ mongoose.Promise = global.Promise;
 
 require('./auth/auth');
 
+// init express
+const app = express();
+
+app.options('*', cors()) // include before other routes
+
 // import routes
 const indexRouter = require('./routes/index');
 const loginRouter = require('./routes/login');
 const blogPostRouter = require('./routes/blog_secure');
 const blogRouter = require('./routes/blog');
-
-// init express
-const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -55,10 +58,6 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-});
-
-app.listen(8080, () => {
-  console.log('Server started.');
 });
 
 module.exports = app;
