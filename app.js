@@ -37,6 +37,7 @@ const blogPostRouter = require('./routes/blog_secure');
 const blogRouter = require('./routes/blog');
 
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cors());
 
 // use routes
 app.use('/', indexRouter);
