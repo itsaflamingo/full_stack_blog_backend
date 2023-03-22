@@ -1,15 +1,13 @@
-# fly.toml file generated for fullstack-blog-backend on 2023-03-16T16:46:13-04:00
+# fly.toml file generated for fs-blog-backend on 2023-03-22T11:09:12-04:00
 
-app = "fullstack-blog-backend"
+app = "fs-blog-backend"
 kill_signal = "SIGINT"
 kill_timeout = 5
 primary_region = "yyz"
 processes = []
 
-[build]
-  image = "flyio/hellofly:latest"
-
 [env]
+  PORT = "8080"
 
 [experimental]
   auto_rollback = true

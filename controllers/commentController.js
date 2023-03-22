@@ -4,10 +4,14 @@ const { body, validationResult } = require('express-validator');
 
 exports.comment_list = (req, res, next) => {
     Comment.find({ blogPost: req.params.id }, 'name body date')
-        .sort({ date: 1 })
+        .sort({ date: -1 })
+        .populate('blogPost') // Add this line to populate the blogPost field
         .exec()
             .then(result => res.json(result))
-            .catch(err => next(err))
+            .catch(err => {
+                console.log(err)
+                next(err)
+            })
 }
 
 exports.create_comment = [
