@@ -4,7 +4,7 @@ const BlogPost = require('../models/blog_post');
 // View all published posts
 exports.published_list = (req, res, next) => {
     BlogPost.find({ published: true }, 'title body date')
-        .sort({ date: 1 })
+        .sort({ date: -1 })
         .exec()
             .then(result => res.json(result))
             .catch(err => next(err))
@@ -12,7 +12,7 @@ exports.published_list = (req, res, next) => {
 // View all published and unpublished posts
 exports.all_posts_list = (req, res, next) => {
     BlogPost.find({}, 'title body date')
-        .sort({ date: 1 })
+        .sort({ date: -1 })
         .exec()
             .then(result => res.json(result))
             .catch(err => next(err))
