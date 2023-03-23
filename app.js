@@ -7,6 +7,11 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 dotenv.config();
 
+// init express
+const app = express();
+app.options('*', cors()) // include before other routes
+app.use(cors());
+
 // Prepare for mongoose 7
 mongoose.set('strictQuery', false);
 
@@ -25,11 +30,6 @@ mongoose.Promise = global.Promise;
 
 require('./auth/auth');
 
-// init express
-const app = express();
-
-app.options('*', cors()) // include before other routes
-
 // import routes
 const indexRouter = require('./routes/index');
 const loginRouter = require('./routes/login');
@@ -37,7 +37,6 @@ const blogPostRouter = require('./routes/blog_secure');
 const blogRouter = require('./routes/blog');
 
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cors());
 
 // use routes
 app.use('/', indexRouter);
