@@ -9,7 +9,6 @@ dotenv.config();
 
 // init express
 const app = express();
-app.options('*', cors()) // include before other routes
 app.use(cors());
 
 // Prepare for mongoose 7
