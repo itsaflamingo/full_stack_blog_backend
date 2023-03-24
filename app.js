@@ -9,7 +9,14 @@ dotenv.config();
 
 // init express
 const app = express();
-app.use(cors());
+
+// Enable CORS from all domains for all requests
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
+});
 
 // Prepare for mongoose 7
 mongoose.set('strictQuery', false);
