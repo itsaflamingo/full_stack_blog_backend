@@ -31,19 +31,21 @@ passport.use(
         }) 
     )
 
-// Extract JWT from query parameter, then verifies this token has been signed with secret/key set while logging in
-passport.use(
-  new JWTstrategy(
-    {
-      secretOrKey: process.env.SECRET,
-      jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken()
-    },
-    async (token, done) => {
-      try {
-        return done(null, token.user);
-      } catch (error) {
-        done(error);
+if(process.env.SECRET) {
+  // Extract JWT from query parameter, then verifies this token has been signed with secret/key set while logging in
+  passport.use(
+    new JWTstrategy(
+      {
+        secretOrKey: process.env.SECRET,
+        jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken()
+      },
+      async (token, done) => {
+        try {
+          return done(null, token.user);
+        } catch (error) {
+          done(error);
+        }
       }
-    }
-  )
-);
+    )
+  );
+}
