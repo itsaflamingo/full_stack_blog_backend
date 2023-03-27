@@ -10,17 +10,6 @@ dotenv.config();
 // init express
 const app = express();
 
-// Enable CORS from all domains for all requests
-app.use(cors());
-
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  console.log('Headers:', req.headers);
-  next();
-});
-
 // Prepare for mongoose 7
 mongoose.set('strictQuery', false);
 
@@ -29,6 +18,7 @@ const mongoDB = process.env.URI;
 
 // Wait for database to connect, logging an error if there is a problem 
 main().catch(err => console.log(err));
+
 async function main() {
   await mongoose.connect(mongoDB, {
     useNewUrlParser: true,
@@ -47,12 +37,17 @@ const blogRouter = require('./routes/blog');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
+app.use('/blog-secure', passport.authenticate('jwt', { session: false }), blogPostRouter);
+
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  next();
+});
+
 // use routes
 app.use('/', indexRouter);
 app.use('/login', loginRouter);
 app.use('/blog', blogRouter);
-
-app.use('/blog-secure', passport.authenticate('jwt', { session: false }), blogPostRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
