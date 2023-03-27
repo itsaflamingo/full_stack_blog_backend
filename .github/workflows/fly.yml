@@ -14,4 +14,4 @@ jobs:
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
           SECRET: ${{ secrets.SECRET }}
-          URI: ${{ SECRETS.URI }}
+          URI: ${{ secrets.URI }}
