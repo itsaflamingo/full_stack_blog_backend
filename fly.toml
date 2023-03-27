@@ -1,4 +1,4 @@
-# fly.toml file generated for fs-blog-backend on 2023-03-24T09:05:16-04:00
+# fly.toml file generated for fs-blog-backend on 2023-03-27T12:53:25-04:00
 
 app = "fs-blog-backend"
 kill_signal = "SIGINT"
