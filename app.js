@@ -13,6 +13,7 @@ const app = express();
 // Prepare for mongoose 7
 mongoose.set('strictQuery', false);
 // Define the database URL to connect to.
+console.log('SECRETS: ', process.env.URI, process.env.SECRET );
 const mongoDB = process.env.URI;
 
 // Wait for database to connect, logging an error if there is a problem 
