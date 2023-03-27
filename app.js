@@ -39,7 +39,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/blog-secure', passport.authenticate('jwt', { session: false }), blogPostRouter);
 
 app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000', 'https://fs-blog-backend.fly.dev/');
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000', 'https://fs-blog-backend.fly.dev/', 'http://localhost:8080');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   res.setHeader('Access-Control-Allow-Credentials', true);
