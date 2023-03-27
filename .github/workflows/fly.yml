@@ -10,10 +10,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: superfly/flyctl-actions/setup-flyctl@master
-      - name: Replace secrets in app.json
-        run: |
-          sed -i "s|{SECRET}|${{ secrets.SECRET }}|g" fly.toml
-          sed -i "s|{URI}|${{ secrets.URI }}|g" fly.toml
       - run: flyctl deploy --remote-only
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          SECRET: ${{ secrets.SECRET }}
+          URI: ${{ secrets.URI }}
+
