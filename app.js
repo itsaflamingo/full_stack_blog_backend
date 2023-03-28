@@ -10,6 +10,10 @@ dotenv.config();
 // init express
 const app = express();
 
+console.log('CORS', cors());
+app.use(cors());
+app.options('*', cors());
+
 // Prepare for mongoose 7
 mongoose.set('strictQuery', false);
 // Define the database URL to connect to.
@@ -35,9 +39,6 @@ const blogPostRouter = require('./routes/blog_secure');
 const blogRouter = require('./routes/blog');
 
 app.use(bodyParser.urlencoded({ extended: false }));
-
-app.use(cors());
-app.options('*', cors());
 
 // use routes
 app.use('/', indexRouter);
