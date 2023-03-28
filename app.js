@@ -10,8 +10,6 @@ dotenv.config();
 // init express
 const app = express();
 
-app.use(cors())
-
 // Prepare for mongoose 7
 mongoose.set('strictQuery', false);
 // Define the database URL to connect to.
@@ -29,6 +27,8 @@ async function main() {
 mongoose.Promise = global.Promise;
 
 require('./auth/auth');
+
+app.use(cors());
 
 // import routes
 const indexRouter = require('./routes/index');
