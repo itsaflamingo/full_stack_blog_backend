@@ -10,6 +10,8 @@ dotenv.config();
 // init express
 const app = express();
 
+app.use(cors())
+
 // Prepare for mongoose 7
 mongoose.set('strictQuery', false);
 // Define the database URL to connect to.
@@ -36,33 +38,11 @@ const blogRouter = require('./routes/blog');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use('/blog-secure', passport.authenticate('jwt', { session: false }), blogPostRouter);
-
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000', 'https://fs-blog-backend.fly.dev/', 'http://localhost:8080');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  res.setHeader('Access-Control-Allow-Credentials', true);
-  next();
-});
-
-const handleOptionsRequests = (req, res, next) => {
-  if (req.method === 'OPTIONS') {
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000', 'https://fs-blog-backend.fly.dev/', 'http://localhost:8080');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-    res.sendStatus(200);
-  } else {
-    next();
-  }
-};
-
-app.options('/blog/post/:id/comments/create-comment', handleOptionsRequests)
-
 // use routes
 app.use('/', indexRouter);
 app.use('/login', loginRouter);
 app.use('/blog', blogRouter);
+app.use('/blog-secure', passport.authenticate('jwt', { session: false }), blogPostRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
