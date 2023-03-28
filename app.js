@@ -28,8 +28,6 @@ mongoose.Promise = global.Promise;
 
 require('./auth/auth');
 
-app.use(cors());
-
 // import routes
 const indexRouter = require('./routes/index');
 const loginRouter = require('./routes/login');
@@ -37,6 +35,9 @@ const blogPostRouter = require('./routes/blog_secure');
 const blogRouter = require('./routes/blog');
 
 app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use(cors());
+app.options('*', cors());
 
 // use routes
 app.use('/', indexRouter);
