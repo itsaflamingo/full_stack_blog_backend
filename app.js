@@ -46,6 +46,19 @@ app.use((req, res, next) => {
   next();
 });
 
+const handleOptionsRequests = (req, res, next) => {
+  if (req.method === 'OPTIONS') {
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000', 'https://fs-blog-backend.fly.dev/', 'http://localhost:8080');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    res.sendStatus(200);
+  } else {
+    next();
+  }
+};
+
+app.options('/blog/post/:id/comments/create-comment', handleOptionsRequests)
+
 // use routes
 app.use('/', indexRouter);
 app.use('/login', loginRouter);
