@@ -15,7 +15,7 @@ router.patch('/post/:id/update',      blog_post_controller.update_post     );
 router.post ('/post/:id/delete',      blog_post_controller.delete_post     );
 router.post ('/post/:id/:cid/delete', comment_controller.delete_comment    );
 router.post ('/description',          blog_info_controller.create_blog_info);
-router.get  ('/description',          blog_info_controller.all_info        );
+router.get  ('/description',          blog_info_controller.blog_info       );
 router.patch('/description/:id',      blog_info_controller.edit_blog_info  );
 
 module.exports = router;

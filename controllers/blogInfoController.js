@@ -46,14 +46,6 @@ exports.create_blog_info = [
             })
 }]
 
-exports.all_info = (req, res, next) => {
-    // View all published and unpublished posts
-    BlogInfo.find({}, 'picture description')
-        .exec()
-            .then(result => res.json(result))
-            .catch(err => next(err))
-    }
-
 exports.edit_blog_info = [
     // Sanitize and trim
     body('picture', 'Picture must not be empty.')
