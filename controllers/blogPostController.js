@@ -91,13 +91,7 @@ exports.update_post = [
     (req, res, next) => {
         // Extract validation errors from request
         const errors = validationResult(req);
-        // Create post object with new data but old id
-        const blogPost = new BlogPost({
-            title:     req.body.title,
-            body:      req.body.body,
-            published: true,
-            _id:       req.params.id
-        })
+        
         // If errors array is not empty, handle error
         if(!errors.isEmpty()) {
             const err = new Error('Blog post not found');
@@ -105,7 +99,12 @@ exports.update_post = [
             return next(err);
         }
         // Otherwise save updated post and update record
-        BlogPost.findByIdAndUpdate(req.params.id, blogPost)
+        BlogPost.findOneAndUpdate({ _id: req.params.id }, { $set: {
+            title:     req.body.title, 
+            body:      req.body.body, 
+            published: true, 
+            _id:       req.params.id 
+        }}, { new: true })
             .then(blogpost => {
                 // blog post not found
                 if(!blogpost) {

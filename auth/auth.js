@@ -27,9 +27,8 @@ passport.use(
                 if(err) {
                     return done(err);
                 }
-            })
-        }) 
-    )
+            });
+        }));
 
 // Extract JWT from query parameter, then verifies this token has been signed with secret/key set while logging in
 passport.use(
@@ -44,6 +43,4 @@ passport.use(
       } catch (error) {
         done(error);
       }
-    }
-  )
-);
+    }));

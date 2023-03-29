@@ -6,7 +6,7 @@ const Schema = mongoose.Schema;
 const UserSchema = new Schema({
     username: { type: String, required: true },
     password: { type: String, required: true }
-})
+});
 
 UserSchema.pre(
     'save',
@@ -19,8 +19,7 @@ UserSchema.pre(
         this.password = hash;
         // next
         next();
-    }
-)
+    });
 
 UserSchema.methods.isValidPassword = async function(password) {
     // save this schema to user

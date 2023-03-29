@@ -11,19 +11,19 @@ const CommentSchema = new Schema({
 }, {
     toObject: { virtuals: true },
     toJSON:   { virtuals: true }
-})
+});
 
 CommentSchema.virtual('date_formatted').get(function() {
     return DateTime.fromJSDate(this.date).toLocaleString(DateTime.DATE_MED);
-})
+});
 
 // Add virtual. Use function() to access 'this'.
 CommentSchema.virtual('cid').get(function() {
     return this._id;
-})
+});
 
 CommentSchema.virtual('url').get(function() {
     return `/blog/post/${this.blogPost._id}/${this.cid}`;
-})
+});
 
 module.exports = mongoose.model('Comment', CommentSchema);
