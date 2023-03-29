@@ -1,18 +1,17 @@
 const createError = require('http-errors');
 const express = require('express');
 const cors = require('cors');
+const mongoose = require('mongoose');
+const passport = require('passport');
+const dotenv = require('dotenv');
+const bodyParser = require('body-parser');
+dotenv.config();
 
 // init express
 const app = express();
 
 app.use(cors());
 app.options('*', cors());
-
-const mongoose = require('mongoose');
-const passport = require('passport');
-const dotenv = require('dotenv');
-const bodyParser = require('body-parser');
-dotenv.config();
 
 // Prepare for mongoose 7
 mongoose.set('strictQuery', false);
