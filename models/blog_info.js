@@ -8,16 +8,10 @@ const BlogInfoSchema = new Schema({
     description:  { type: String, required: true },
 });
 
-// Middleware to decode the picture URL before saving the document
-BlogInfoSchema.pre('save', function (next) {
-    // Check if the picture field has been modified
-    if (this.isModified('picture')) {
-      // Decode the URL using the he library
-      this.picture = he.decode(this.picture);
-    }
-    // Call the next middleware
-    next();
-  });
+// Setter function for picture field, called whenever value is set for the field
+BlogInfoSchema.path('picture').set(function (url) {
+    return he.decode(url);
+  });  
 
 // Add virtual. Use function() to access 'this'.
 BlogInfoSchema.virtual('url').get(function() {
