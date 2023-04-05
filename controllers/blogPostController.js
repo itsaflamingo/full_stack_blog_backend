@@ -74,8 +74,7 @@ exports.update_get = (req, res, next) => {
           date:      results.date_formatted
         });
       }
-    );
-  };
+    )}
 
 exports.update_post = [
     // Validate and sanitize fields

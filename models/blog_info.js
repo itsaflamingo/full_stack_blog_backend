@@ -4,6 +4,7 @@ const he = require('he');
 const Schema = mongoose.Schema;
 
 const BlogInfoSchema = new Schema({
+    name:         { type: String, required: true },
     picture:      { type: String, required: true },
     description:  { type: String, required: true },
 });

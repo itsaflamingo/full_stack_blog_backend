@@ -11,6 +11,10 @@ exports.blog_info = (req, res, next) => {
 
 exports.create_blog_info = [
     // Sanitize and trim
+    body('name', 'Name must not be empty.')
+        .trim()
+        .isLength({ min: 1 })
+        .escape,
     body('picture', 'Picture must not be empty.')
         .trim()
         .isLength({ min: 1 })
@@ -25,6 +29,7 @@ exports.create_blog_info = [
 
         // Create new blog post object with sanitized and trimmed data
         const blogInfo = new BlogInfo({
+            name:        req.body.name,
             picture:     req.body.picture,
             description: req.body.description,
         })
@@ -37,6 +42,7 @@ exports.create_blog_info = [
         blogInfo.save()
             .then(results => {
                 res.json({
+                    name:        results.name,
                     picture:     results.picture,
                     description: results.description,
                 })
@@ -48,6 +54,10 @@ exports.create_blog_info = [
 
 exports.edit_blog_info = [
     // Sanitize and trim
+    body('name', 'Name must not be empty.')
+        .trim()
+        .isLength({ min: 1 })
+        .escape,
     body('picture', 'Picture must not be empty.')
         .trim()
         .isLength({ min: 1 })
@@ -67,6 +77,7 @@ exports.edit_blog_info = [
         }
         // Otherwise save updated post and update record
         BlogInfo.findOneAndUpdate({ _id: req.params.id }, {$set: {
+            name:        req.body.name, 
             picture:     req.body.picture, 
             description: req.body.description, 
             _id:         req.params.id 
@@ -78,6 +89,7 @@ exports.edit_blog_info = [
                 }
                 // Successful: send updated book as json object
                 res.json({
+                    name:        bloginfo.name,
                     picture:     bloginfo.picture,
                     description: bloginfo.description,
                     _id:         bloginfo._id
