@@ -11,10 +11,6 @@ exports.blog_info = (req, res, next) => {
 
 exports.create_blog_info = [
     // Sanitize and trim
-    body('name', 'Name must not be empty.')
-        .trim()
-        .isLength({ min: 1 })
-        .escape,
     body('picture', 'Picture must not be empty.')
         .trim()
         .isLength({ min: 1 })

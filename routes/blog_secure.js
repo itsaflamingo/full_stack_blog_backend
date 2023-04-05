@@ -14,7 +14,7 @@ router.get    ('/post/:id/update',      blog_post_controller.update_get      );
 router.patch  ('/post/:id/update',      blog_post_controller.update_post     );
 router.delete ('/post/:id/delete',      blog_post_controller.delete_post     );
 router.delete ('/post/:id/:cid/delete', comment_controller.delete_comment    );
-router.post   ('/description',          blog_info_controller.create_blog_info);
+router.post   ('/description/create',   blog_info_controller.create_blog_info);
 router.get    ('/description',          blog_info_controller.blog_info       );
 router.patch  ('/description/:id',      blog_info_controller.edit_blog_info  );
 
