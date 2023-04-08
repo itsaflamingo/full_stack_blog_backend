@@ -13,11 +13,11 @@ const CommentSchema = new Schema({
     toJSON:   { virtuals: true }
 });
 
-BlogPostSchema.path('body').set(function (body) {
+CommentSchema.path('body').set(function (body) {
     return he.decode(body);
   });  
 
-BlogPostSchema.path('name').set(function (name) {
+CommentSchema.path('name').set(function (name) {
   return he.decode(name);
 });  
 
