@@ -30,4 +30,4 @@ exports.single_post_all = (req, res, next) => {
         .exec()
             .then(result => res.json(result))
             .catch(err => next(err))
-}
+}   

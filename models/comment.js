@@ -13,6 +13,14 @@ const CommentSchema = new Schema({
     toJSON:   { virtuals: true }
 });
 
+BlogPostSchema.path('body').set(function (body) {
+    return he.decode(body);
+  });  
+
+BlogPostSchema.path('name').set(function (name) {
+  return he.decode(name);
+});  
+
 CommentSchema.virtual('date_formatted').get(function() {
     return DateTime.fromJSDate(this.date).toLocaleString(DateTime.DATE_MED);
 });
