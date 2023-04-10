@@ -53,7 +53,7 @@ exports.edit_blog_info = [
     body('name', 'Name must not be empty.')
         .trim()
         .isLength({ min: 1 })
-        .escape,
+        .escape(),
     body('picture', 'Picture must not be empty.')
         .trim()
         .isLength({ min: 1 })
