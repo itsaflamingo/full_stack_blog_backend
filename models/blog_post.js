@@ -14,6 +14,10 @@ const BlogPostSchema = new Schema({
     toJSON:     { virtuals: true }
 });
 
+BlogPostSchema.path('body').set(function (body) {
+    return he.decode(body);
+  });  
+
 BlogPostSchema.virtual('date_formatted').get(function() {
     return DateTime.fromJSDate(this.date).toLocaleString(DateTime.DATE_MED);
 });
